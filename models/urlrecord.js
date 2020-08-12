@@ -14,4 +14,4 @@ const urlrecordSchema = new Schema({
   }
 })
 
-module.exports = mongoose.model('UrlRecord', urlrecordSchema)
+module.exports = mongoose.model('URLRecord', urlrecordSchema)
