@@ -38,4 +38,18 @@ router.post('/shorten', (req, res) => {
 
 })
 
+router.get('/:shortURL', (req, res) => {
+  const shortURL = req.params.shortURL
+  URLRecord.find({ shortenURL: shortURL })
+    .lean()
+    .then(url => {
+      if (url.length === 0) { // url not found
+        res.redirect('/')
+      } else {
+        res.redirect(`${url[0].url}`)
+      }
+    })
+    .catch(error => console.error(error))
+})
+
 module.exports = router
