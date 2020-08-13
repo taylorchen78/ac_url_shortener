@@ -7,10 +7,18 @@ const testURL = ['https://www.google.com.tw/', 'https://www.youtube.com/', 'http
 const initURLseeds = []
 
 db.once('open', () => {
+  const testShortURLArray = []
+  let shortURL = ''
+
   testURL.forEach(item => {
+    do {
+      shortURL = randomShortURL()
+    } while (testShortURLArray.includes(shortURL)) // check if shorten url is exist
+    testShortURLArray.push(shortURL)
+
     initURLseeds.push({
       url: item,
-      shortenURL: randomShortURL()
+      shortenURL: shortURL
     })
   })
 

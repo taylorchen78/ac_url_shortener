@@ -20,7 +20,10 @@ router.post('/shorten', (req, res) => {
   URLRecord.find()
     .lean()
     .then(urls => {
+      const shortURLArray = []
+
       urls.forEach(item => {
+        shortURLArray.push(item.shortenURL)
         if (item.url === inputURL) {
           shortURL = item.shortenURL
         }
@@ -28,7 +31,9 @@ router.post('/shorten', (req, res) => {
 
       // if input url is not found in database, create a record
       if (shortURL === '') {
-        shortURL = randomShortURL()
+        do {
+          shortURL = randomShortURL()
+        } while (shortURLArray.includes(shortURL)) // check if shorten url is exist
         URLRecord.create({ url: inputURL, shortenURL: shortURL })
       }
 
